@@ -1,0 +1,16 @@
+[primary_server]
+cncbi-sqlsrv-1 ansible_host=172.16.125.11
+
+[secondary_server]
+cncbi-sqlsrv-2 ansible_host=172.16.125.12 
+
+[win]
+primary_server
+secondary_server
+
+[win:vars]
+ansible_user=ansible
+ansible_password=Test@123
+ansible_connection=winrm
+ansible_port=5985
+ansible_winrm_server_cert_validation=ignore

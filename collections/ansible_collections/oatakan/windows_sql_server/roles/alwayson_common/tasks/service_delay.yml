@@ -1,0 +1,22 @@
+---
+
+- name: set dependencies
+  ansible.windows.win_service:
+    name: '{{ sql_server_instance_name }}'
+    dependencies:
+      - W32Time
+      - Netlogon
+
+- name: set delayed auto start (sqlinstance)
+  ansible.windows.win_regedit:
+    path: HKLM:\SYSTEM\CurrentControlSet\Services\{{ sql_server_instance_name }}
+    name: DelayedAutoStart
+    data: 0x01
+    type: binary
+
+- name: set delayed auto start (sqlagent)
+  ansible.windows.win_regedit:
+    path: HKLM:\SYSTEM\CurrentControlSet\Services\sqlserveragent
+    name: DelayedAutoStart
+    data: 0x01
+    type: binary

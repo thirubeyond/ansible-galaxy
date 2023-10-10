@@ -1,0 +1,34 @@
+{
+ "collection_info": {
+  "namespace": "oatakan",
+  "name": "windows_cluster",
+  "version": "0.1.1",
+  "authors": [
+   "Orcun Atakan (https://github.com/oatakan)"
+  ],
+  "readme": "README.md",
+  "tags": [
+   "windows",
+   "cluster",
+   "failover"
+  ],
+  "description": "This collection contains example roles for setting up Windows failover clusters.",
+  "license": [
+   "MIT"
+  ],
+  "license_file": null,
+  "dependencies": {},
+  "repository": "https://www.github.com/oatakan/ansible-collection-windows_cluster",
+  "documentation": "https://oatakan.github.io/ansible-collection-windows_cluster/",
+  "homepage": "https://www.github.com/oatakan/ansible-collection-windows_cluster",
+  "issues": "https://www.github.com/oatakan/ansible-collection-windows_cluster/issues"
+ },
+ "file_manifest_file": {
+  "name": "FILES.json",
+  "ftype": "file",
+  "chksum_type": "sha256",
+  "chksum_sha256": "76c275bd1310ad3e3c35ef5a9d41cb69f8f3a5345c09a917b693ea5269f81098",
+  "format": 1
+ },
+ "format": 1
+}

@@ -1,0 +1,4 @@
+---
+
+- ansible.builtin.include_tasks: ag.yml
+  run_once: true

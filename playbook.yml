@@ -1,0 +1,37 @@
+---
+- hosts: win
+  roles:
+    - { role: collections/ansible_collections/oatakan/windows_cluster/roles/join_domain }
+    - { role: collections/ansible_collections/oatakan/windows_cluster/roles/failover_common }
+    - { role: collections/ansible_collections/oatakan/windows_sql_server/roles/sql_users } # optional for using domain users for SQL server
+    - { role: collections/ansible_collections/oatakan/windows_sql_server/roles/install }
+    - { role: collections/ansible_collections/oatakan/windows_sql_server/roles/alwayson_common }
+
+- hosts: primary_server
+  roles:
+    - role: collections/ansible_collections/oatakan/windows_cluster/roles/failover
+      first_node: true
+  post_tasks:
+    # this will set the ip address and hostname of the first node so that it's acccessible from the subsequent plays.
+    - name: set cluster_first node
+      add_host:
+        name: cluster_first
+        ip_address:  "{{ ansible_ip_addresses[0] | default(ansible_host) | default(ansible_ssh_host) }}"
+        ansible_hostname: "{{ ansible_hostname | default(ansible_host) | default(ansible_ssh_host) }}"
+
+- hosts: secondary_server
+  roles:
+    - role: collections/ansible_collections/oatakan/windows_cluster/roles/failover
+      first_node: false
+
+# after fully functional Windows cluster, we move onto setting up alwayson cluster
+- hosts: primary_server
+  roles:
+    - { role: collections/ansible_collections/oatakan/windows_sql_server/roles/ad_availability_group } # this needs to be set up once per AD
+    - role: collections/ansible_collections/oatakan/windows_sql_server/roles/alwayson
+      first_node: true
+
+- hosts: secondary_server
+  roles:
+    - role: collections/ansible_collections/oatakan/windows_sql_server/roles/alwayson
+      first_node: false
